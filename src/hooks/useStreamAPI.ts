@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
-import { StreamData, AlertState } from '@/types'
-import { API_KEY, PIPELINE_ID, API_BASE_URL, BACKEND_URL } from '@/constants'
+import { StreamData, AlertState } from '../types'
+import { API_KEY, PIPELINE_ID, API_BASE_URL, BACKEND_URL } from '../constants'
 
-export const useStreamAPI = () => {
+export const useStreamAPI = (sourceCanvasRef?: React.RefObject<HTMLCanvasElement>) => {
   const [streamData, setStreamData] = useState<StreamData | null>(null)
   const [localStream, setLocalStream] = useState<MediaStream | null>(null)
   const [peerConnection, setPeerConnection] = useState<RTCPeerConnection | null>(null)
@@ -80,31 +80,36 @@ export const useStreamAPI = () => {
     }
   }
 
-  const startCamera = async () => {
+  const startStreamSource = async () => {
     try {
-      setStreamCreationStatus("Starting camera...")
-      
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-          frameRate: { ideal: 30 }
-        },
-        audio: true
-      })
+      let stream;
+      if (sourceCanvasRef && sourceCanvasRef.current) {
+        setStreamCreationStatus("Starting canvas stream...")
+        stream = sourceCanvasRef.current.captureStream(30); // 30 FPS
+      } else {
+        setStreamCreationStatus("Starting camera...")
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
+            frameRate: { ideal: 30 }
+          },
+          audio: true
+        });
+      }
       
       setLocalStream(stream)
       if (localVideoRef.current) {
         localVideoRef.current.srcObject = stream
       }
       
-      setStreamCreationStatus("Camera started successfully!")
-      showAlert("Camera started successfully!", 'success')
+      setStreamCreationStatus("Stream source started successfully!")
+      showAlert("Stream source started successfully!", 'success')
       
     } catch (error) {
-      console.error('Error accessing camera:', error)
-      setStreamCreationStatus(`Failed to access camera: ${error instanceof Error ? error.message : 'Unknown error'}`)
-      showAlert(`Failed to access camera: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error')
+      console.error('Error accessing stream source:', error)
+      setStreamCreationStatus(`Failed to access stream source: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      showAlert(`Failed to access stream source: ${error instanceof Error ? error.message : 'Unknown error'}`, 'error')
     }
   }
 
@@ -342,7 +347,7 @@ export const useStreamAPI = () => {
     localVideoRef,
     outputPlayerRef,
     createStream,
-    startCamera,
+    startStreamSource,
     startWebRTCStream,
     stopStream,
     updateParameters,
