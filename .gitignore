@@ -1,0 +1,26 @@
+# Dependency directories
+node_modules/
+
+# Build artifacts
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+
+# Large binary files
+*.zip
+*.mp4
+
+# Editor files
+.vscode/
+.idea/
+
+# Virtual environments
+.venv/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
