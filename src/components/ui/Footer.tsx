@@ -1,8 +1,8 @@
 import React from 'react'
 import { Play } from 'lucide-react'
-import { useTheme } from '@/contexts/ThemeContext'
+import { useTheme } from '../../contexts/ThemeContext'
 
-const ReusableFooter: React.FC = () => {
+export const ReusableFooter: React.FC = () => {
   const { theme } = useTheme()
 
   return (
@@ -36,5 +36,3 @@ const ReusableFooter: React.FC = () => {
     </footer>
   )
 }
-
-export default ReusableFooter
