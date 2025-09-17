@@ -1,0 +1,63 @@
+version: 2
+updates:
+  # ==============================
+  # JavaScript / Node (npm, yarn, pnpm)
+  # ==============================
+  - package-ecosystem: "npm"
+    directory: "/" # change if package.json lives elsewhere
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # ==============================
+  # Python (requirements.txt / setup.py)
+  # ==============================
+  - package-ecosystem: "pip"
+    directory: "/" # change if requirements.txt lives in /backend
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # ==============================
+  # Poetry (pyproject.toml / poetry.lock)
+  # ==============================
+  - package-ecosystem: "poetry"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # ==============================
+  # Docker (Dockerfile images)
+  # ==============================
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # ==============================
+  # GitHub Actions (CI/CD workflows)
+  # ==============================
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      actions-minor-and-patch:
+        update-types: ["minor", "patch"]
+
+  # ==============================
+  # Terraform (Infrastructure as Code)
+  # ==============================
+  - package-ecosystem: "terraform"
+    directory: "/"
+    schedule:
+      interval: "weekly"
