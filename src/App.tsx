@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { InputSource, AudioVisualizerConfig } from './types';
 import AudioVisualizer from './components/AudioVisualizer';
+import FluidCanvas from './components/FluidCanvas';
 
 const DEFAULT_AUDIO_VISUALIZER_CONFIG: AudioVisualizerConfig = {
   displacement: 0.5,
@@ -21,8 +22,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <header className="p-4 border-b border-gray-700">
+      <header className="p-4 border-b border-gray-700 flex justify-between items-center">
         <h1 className="text-2xl font-bold">StreamDiffusion Studio</h1>
+        <a href="/studio" className="text-blue-400 hover:text-blue-300">Go to Studio</a>
       </header>
 
       <main className="p-4">
@@ -37,6 +39,7 @@ function App() {
             <option value="3d_shapes">3D Shapes</option>
             <option value="cosmic_ripples">Cosmic Ripples</option>
             <option value="audio_visualizer">Audio Visualizer</option>
+            <option value="fluid">Fluid</option>
           </select>
         </div>
 
@@ -47,7 +50,10 @@ function App() {
               config={audioVisualizerConfig} 
             />
           )}
-          {inputSource !== 'audio_visualizer' && (
+          {inputSource === 'fluid' && (
+            <FluidCanvas />
+          )}
+          {inputSource !== 'audio_visualizer' && inputSource !== 'fluid' && (
             <div className="flex items-center justify-center h-full">
               {inputSource} input will be displayed here
             </div>
