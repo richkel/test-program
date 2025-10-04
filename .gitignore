@@ -1,26 +1,22 @@
-# Dependency directories
+# Logs
+*.log
+
+# Scratch directory
+jules-scratch/
+
+# Dependencies
 node_modules/
 
 # Build artifacts
 dist/
 build/
+target/
 
-# Environment files
+# Environment variables
 .env
-.env.local
+.env.*
+!.env.example
 
-# Large binary files
-*.zip
-*.mp4
-
-# Editor files
-.vscode/
-.idea/
-
-# Virtual environments
-.venv/
-venv/
-
-# OS files
+# OS-specific files
 .DS_Store
 Thumbs.db
